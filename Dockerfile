@@ -1,24 +1,27 @@
-# Use Eclipse Temurin Java 21 JDK (Alpine for smaller image)
+# Use OpenJDK 21
 FROM eclipse-temurin:21-jdk-alpine
 
-# Set working directory inside container
 WORKDIR /app
 
-# Copy Maven wrapper and pom.xml first (for caching dependencies)
-COPY mvnw pom.xml ./
+# Copy Maven wrapper and pom.xml first
+COPY mvnw .
 COPY .mvn .mvn
+COPY pom.xml .
 
-# Download dependencies (offline mode)
+# Make mvnw executable
+RUN chmod +x ./mvnw
+
+# Download dependencies offline
 RUN ./mvnw dependency:go-offline
 
-# Copy source code
+# Copy the rest of the source code
 COPY src ./src
 
-# Package the application (skip tests for faster build)
-RUN ./mvnw clean package -DskipTests
+# Package the app
+RUN ./mvnw package -DskipTests
 
-# Expose port (Spring Boot default)
+# Expose port
 EXPOSE 8080
 
-# Run the Spring Boot JAR
+# Run the app
 CMD ["java", "-jar", "target/portfolio-0.0.1-SNAPSHOT.jar"]
