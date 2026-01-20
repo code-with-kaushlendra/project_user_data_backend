@@ -8,7 +8,7 @@ import port.example.Portfolio.Service.ProfileService;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://project-user-frontend-five.vercel.app/")
 public class ProfileController {
     
 

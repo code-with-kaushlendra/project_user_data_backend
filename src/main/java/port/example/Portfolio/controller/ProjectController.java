@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/projects")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://project-user-frontend-five.vercel.app/")
 public class ProjectController {
     private final ProjectService service;
 
